@@ -188,9 +188,9 @@ public ConVarChange_Alltalk(Handle:convar, const String:oldValue[], const String
 	}
 }
 
-public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
+public Event_PlayerSpawn(Event event, const String:name[], bool:dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	new client = GetClientOfUserId(event.GetInt("userid"));
 	
 	if (!client)
 	{
@@ -207,9 +207,9 @@ public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
 	}
 }
 
-public Event_PlayerDeath(Handle:event, const String:name[], bool:dontBroadcast)
+public Event_PlayerDeath(Event event, const String:name[], bool:dontBroadcast)
 {
-	new client = GetClientOfUserId(GetEventInt(event, "userid"));
+	new client = GetClientOfUserId(event.GetInt("userid"));
 	
 	if (!client)
 	{

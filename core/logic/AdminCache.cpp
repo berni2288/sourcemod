@@ -47,7 +47,6 @@
 AdminCache g_Admins;
 char g_ReverseFlags[26];
 AdminFlag g_FlagLetters[26];
-bool g_FlagSet[26];
 
 /* Default flags */
 AdminFlag g_DefaultFlags[26] = 
@@ -69,11 +68,6 @@ public:
 		if (!Parse())
 		{
 			memcpy(g_FlagLetters, g_DefaultFlags, sizeof(AdminFlag) * 26);
-			for (unsigned int i=0; i<20; i++)
-			{
-				g_FlagSet[i] = true;
-			}
-			g_FlagSet[25] = true;
 		}
 	}
 private:
@@ -103,7 +97,10 @@ private:
 	{
 		m_LevelState = LEVEL_STATE_NONE;
 		m_IgnoreLevel = 0;
-		memset(g_FlagSet, 0, sizeof(g_FlagSet));
+		for (size_t i = 0; i < SM_ARRAYSIZE(g_FlagLetters); ++i)
+		{
+			g_FlagLetters[i] = Admin_Generic;
+		}
 	}
 	SMCResult ReadSMC_NewSection(const SMCStates *states, const char *name)
 	{
@@ -162,8 +159,6 @@ private:
 			ParseError(states, "Unrecognized admin level \"%s\"", key);
 			return SMCResult_Continue;
 		}
-
-		g_FlagSet[c] = true;
 
 		return SMCResult_Continue;
 	}
@@ -1575,9 +1570,7 @@ bool AdminCache::CanAdminTarget(AdminId id, AdminId target)
 
 bool AdminCache::FindFlag(char c, AdminFlag *pAdmFlag)
 {
-	if (c < 'a' 
-		|| c > 'z'
-		|| !g_FlagSet[(unsigned)c - (unsigned)'a'])
+	if (c < 'a' || c > 'z')
 	{
 		return false;
 	}
@@ -1592,11 +1585,6 @@ bool AdminCache::FindFlag(char c, AdminFlag *pAdmFlag)
 
 bool AdminCache::FindFlagChar(AdminFlag flag, char *c)
 {
-	if (!g_FlagSet[flag])
-	{
-		return false;
-	}
-
 	if (c)
 	{
 		*c = g_ReverseFlags[flag];

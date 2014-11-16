@@ -48,7 +48,7 @@ public Plugin:myinfo =
 
 TopMenu hTopMenu;
 
-new Handle:g_MapList;
+Menu g_MapList;
 new Handle:g_ProtectedVars;
 
 #include "basecommands/kick.sp"
@@ -82,8 +82,8 @@ public OnPluginStart()
 	}
 	
 	g_MapList = CreateMenu(MenuHandler_ChangeMap, MenuAction_Display);
-	SetMenuTitle(g_MapList, "%T", "Please select a map", LANG_SERVER);
-	SetMenuExitBackButton(g_MapList, true);
+	g_MapList.SetTitle("%T", "Please select a map", LANG_SERVER);
+	g_MapList.ExitBackButton = true;
 	
 	decl String:mapListPath[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, mapListPath, sizeof(mapListPath), "configs/adminmenu_maplist.ini");
@@ -282,7 +282,7 @@ public Action:Command_Cvar(client, args)
 	}
 
 	new Handle:hndl = FindConVar(cvarname);
-	if (hndl == INVALID_HANDLE)
+	if (hndl == null)
 	{
 		ReplyToCommand(client, "[SM] %t", "Unable to find cvar", cvarname);
 		return Plugin_Handled;
@@ -334,7 +334,7 @@ public Action:Command_ResetCvar(client, args)
 	GetCmdArg(1, cvarname, sizeof(cvarname));
 	
 	new Handle:hndl = FindConVar(cvarname);
-	if (hndl == INVALID_HANDLE)
+	if (hndl == null)
 	{
 		ReplyToCommand(client, "[SM] %t", "Unable to find cvar", cvarname);
 		return Plugin_Handled;

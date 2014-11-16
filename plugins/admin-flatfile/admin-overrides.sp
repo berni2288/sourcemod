@@ -36,8 +36,8 @@
 #define OVERRIDE_STATE_LEVELS		1
 #define OVERRIDE_STATE_OVERRIDES	2
 
-static Handle:g_hOldOverrideParser = INVALID_HANDLE;
-static Handle:g_hNewOverrideParser = INVALID_HANDLE;
+static Handle:g_hOldOverrideParser = null;
+static Handle:g_hNewOverrideParser = null;
 static g_OverrideState = OVERRIDE_STATE_NONE;
 
 public SMCResult:ReadOldOverrides_NewSection(Handle:smc, const String:name[], bool:opt_quotes)
@@ -164,7 +164,7 @@ public SMCResult:ReadOverrides_CurrentLine(Handle:smc, const String:line[], line
 
 static InitializeOverrideParsers()
 {
-	if (g_hOldOverrideParser == INVALID_HANDLE)
+	if (g_hOldOverrideParser == null)
 	{
 		g_hOldOverrideParser = SMC_CreateParser();
 		SMC_SetReaders(g_hOldOverrideParser,
@@ -173,7 +173,7 @@ static InitializeOverrideParsers()
 					   ReadOldOverrides_EndSection);
 		SMC_SetRawLine(g_hOldOverrideParser, ReadOverrides_CurrentLine);
 	}
-	if (g_hNewOverrideParser == INVALID_HANDLE)
+	if (g_hNewOverrideParser == null)
 	{
 		g_hNewOverrideParser = SMC_CreateParser();
 		SMC_SetReaders(g_hNewOverrideParser,

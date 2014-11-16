@@ -38,7 +38,7 @@
 #define GROUP_PASS_FIRST		1
 #define GROUP_PASS_SECOND		2
 
-static Handle:g_hGroupParser = INVALID_HANDLE;
+static Handle:g_hGroupParser = null;
 static GroupId:g_CurGrp = INVALID_GROUP_ID;
 static g_GroupState = GROUP_STATE_NONE;
 static g_GroupPass = 0;
@@ -196,7 +196,7 @@ public SMCResult:ReadGroups_CurrentLine(Handle:smc, const String:line[], lineno)
 
 static InitializeGroupParser()
 {
-	if (g_hGroupParser == INVALID_HANDLE)
+	if (g_hGroupParser == null)
 	{
 		g_hGroupParser = SMC_CreateParser();
 		SMC_SetReaders(g_hGroupParser,

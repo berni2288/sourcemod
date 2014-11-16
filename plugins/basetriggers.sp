@@ -48,15 +48,15 @@ public Plugin:myinfo =
 	url = "http://www.sourcemod.net/"
 };
 
-new Handle:g_Cvar_TriggerShow = INVALID_HANDLE;
-new Handle:g_Cvar_TimeleftInterval = INVALID_HANDLE;
-new Handle:g_Cvar_FriendlyFire = INVALID_HANDLE;
+new Handle:g_Cvar_TriggerShow = null;
+new Handle:g_Cvar_TimeleftInterval = null;
+new Handle:g_Cvar_FriendlyFire = null;
 
-new Handle:g_Timer_TimeShow = INVALID_HANDLE;
+new Handle:g_Timer_TimeShow = null;
 
-new Handle:g_Cvar_WinLimit = INVALID_HANDLE;
-new Handle:g_Cvar_FragLimit = INVALID_HANDLE;
-new Handle:g_Cvar_MaxRounds = INVALID_HANDLE;
+new Handle:g_Cvar_WinLimit = null;
+new Handle:g_Cvar_FragLimit = null;
+new Handle:g_Cvar_MaxRounds = null;
 
 #define TIMELEFT_ALL_ALWAYS		0		/* Print to all players */
 #define TIMELEFT_ALL_MAYBE		1		/* Print to all players if sm_trigger_show allows */
@@ -167,7 +167,7 @@ public ConVarChange_TimeleftInterval(Handle:convar, const String:oldValue[], con
 	
 	if (newval < 1.0)
 	{
-		if (g_Timer_TimeShow != INVALID_HANDLE)
+		if (g_Timer_TimeShow != null)
 		{
 			KillTimer(g_Timer_TimeShow);		
 		}
@@ -175,7 +175,7 @@ public ConVarChange_TimeleftInterval(Handle:convar, const String:oldValue[], con
 		return;
 	}
 	
-	if (g_Timer_TimeShow != INVALID_HANDLE)
+	if (g_Timer_TimeShow != null)
 	{
 		KillTimer(g_Timer_TimeShow);
 		g_Timer_TimeShow = CreateTimer(newval, Timer_DisplayTimeleft, _, TIMER_REPEAT);
@@ -362,7 +362,7 @@ ShowTimeLeft(client, who)
 	
 	if (!lastround)
 	{
-		if (g_Cvar_WinLimit != INVALID_HANDLE)
+		if (g_Cvar_WinLimit != null)
 		{
 			new winlimit = GetConVarInt(g_Cvar_WinLimit);
 			
@@ -399,7 +399,7 @@ ShowTimeLeft(client, who)
 			}
 		}
 		
-		if (g_Cvar_FragLimit != INVALID_HANDLE)
+		if (g_Cvar_FragLimit != null)
 		{
 			new fraglimit = GetConVarInt(g_Cvar_FragLimit);
 			
@@ -436,7 +436,7 @@ ShowTimeLeft(client, who)
 			}
 		}
 		
-		if (g_Cvar_MaxRounds != INVALID_HANDLE)
+		if (g_Cvar_MaxRounds != null)
 		{
 			new maxrounds = GetConVarInt(g_Cvar_MaxRounds);
 			
@@ -503,7 +503,7 @@ ShowTimeLeft(client, who)
 
 ShowFriendlyFire(client)
 {
-	if (g_Cvar_FriendlyFire != INVALID_HANDLE)
+	if (g_Cvar_FriendlyFire != null)
 	{
 		decl String:phrase[24];
 		if (GetConVarBool(g_Cvar_FriendlyFire))

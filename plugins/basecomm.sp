@@ -50,8 +50,8 @@ public Plugin:myinfo =
 new bool:g_Muted[MAXPLAYERS+1];		// Is the player muted?
 new bool:g_Gagged[MAXPLAYERS+1];	// Is the player gagged?
 
-new Handle:g_Cvar_Deadtalk = INVALID_HANDLE;	// Holds the handle for sm_deadtalk
-new Handle:g_Cvar_Alltalk = INVALID_HANDLE;	// Holds the handle for sv_alltalk
+new Handle:g_Cvar_Deadtalk = null;	// Holds the handle for sm_deadtalk
+new Handle:g_Cvar_Alltalk = null;	// Holds the handle for sv_alltalk
 new bool:g_Hooked = false;			// Tracks if we've hooked events for deadtalk
 
 TopMenu hTopMenu;

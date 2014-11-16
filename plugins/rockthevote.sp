@@ -46,12 +46,12 @@ public Plugin:myinfo =
 	url = "http://www.sourcemod.net/"
 };
 
-new Handle:g_Cvar_Needed = INVALID_HANDLE;
-new Handle:g_Cvar_MinPlayers = INVALID_HANDLE;
-new Handle:g_Cvar_InitialDelay = INVALID_HANDLE;
-new Handle:g_Cvar_Interval = INVALID_HANDLE;
-new Handle:g_Cvar_ChangeTime = INVALID_HANDLE;
-new Handle:g_Cvar_RTVPostVoteAction = INVALID_HANDLE;
+new Handle:g_Cvar_Needed = null;
+new Handle:g_Cvar_MinPlayers = null;
+new Handle:g_Cvar_InitialDelay = null;
+new Handle:g_Cvar_Interval = null;
+new Handle:g_Cvar_ChangeTime = null;
+new Handle:g_Cvar_RTVPostVoteAction = null;
 
 new bool:g_CanRTV = false;		// True if RTV loaded maps and is active.
 new bool:g_RTVAllowed = false;	// True if RTV is available to players. Used to delay rtv votes.

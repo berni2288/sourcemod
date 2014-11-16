@@ -35,7 +35,7 @@
 #define USER_STATE_ADMINS		1
 #define USER_STATE_INADMIN		2
 
-static Handle:g_hUserParser = INVALID_HANDLE;
+static Handle:g_hUserParser = null;
 static g_UserState = USER_STATE_NONE;
 static String:g_CurAuth[64];
 static String:g_CurIdent[64];
@@ -210,7 +210,7 @@ public SMCResult:ReadUsers_CurrentLine(Handle:smc, const String:line[], lineno)
 
 static InitializeUserParser()
 {
-	if (g_hUserParser == INVALID_HANDLE)
+	if (g_hUserParser == null)
 	{
 		g_hUserParser = SMC_CreateParser();
 		SMC_SetReaders(g_hUserParser,

@@ -36,10 +36,10 @@ new g_FreezeBombSerial[MAXPLAYERS+1] = { 0, ... };
 new g_FreezeTime[MAXPLAYERS+1] = { 0, ... };
 new g_FreezeBombTime[MAXPLAYERS+1] = { 0, ... };
 
-new Handle:g_Cvar_FreezeDuration = INVALID_HANDLE;
-new Handle:g_Cvar_FreezeBombTicks = INVALID_HANDLE;
-new Handle:g_Cvar_FreezeBombRadius = INVALID_HANDLE;
-new Handle:g_Cvar_FreezeBombMode = INVALID_HANDLE;
+new Handle:g_Cvar_FreezeDuration = null;
+new Handle:g_Cvar_FreezeBombTicks = null;
+new Handle:g_Cvar_FreezeBombRadius = null;
+new Handle:g_Cvar_FreezeBombMode = null;
 
 FreezeClient(client, time)
 {
@@ -361,37 +361,37 @@ public AdminMenu_FreezeBomb(Handle:topmenu,
 
 DisplayFreezeMenu(client)
 {
-	new Handle:menu = CreateMenu(MenuHandler_Freeze);
+	Menu menu = CreateMenu(MenuHandler_Freeze);
 	
 	decl String:title[100];
 	Format(title, sizeof(title), "%T:", "Freeze player", client);
-	SetMenuTitle(menu, title);
-	SetMenuExitBackButton(menu, true);
+	menu.SetTitle(title);
+	menu.ExitBackButton = true;
 	
 	AddTargetsToMenu(menu, client, true, true);
 	
-	DisplayMenu(menu, client, MENU_TIME_FOREVER);
+	menu.Display(client, MENU_TIME_FOREVER);
 }
 
 DisplayFreezeBombMenu(client)
 {
-	new Handle:menu = CreateMenu(MenuHandler_FreezeBomb);
+	Menu menu = CreateMenu(MenuHandler_FreezeBomb);
 	
 	decl String:title[100];
 	Format(title, sizeof(title), "%T:", "FreezeBomb player", client);
-	SetMenuTitle(menu, title);
-	SetMenuExitBackButton(menu, true);
+	menu.SetTitle(title);
+	menu.ExitBackButton = true;
 	
 	AddTargetsToMenu(menu, client, true, true);
 	
-	DisplayMenu(menu, client, MENU_TIME_FOREVER);
+	menu.Display(client, MENU_TIME_FOREVER);
 }
 
-public MenuHandler_Freeze(Handle:menu, MenuAction:action, param1, param2)
+public MenuHandler_Freeze(Menu menu, MenuAction action, int param1, int param2)
 {
 	if (action == MenuAction_End)
 	{
-		CloseHandle(menu);
+		delete menu;
 	}
 	else if (action == MenuAction_Cancel)
 	{
@@ -405,7 +405,7 @@ public MenuHandler_Freeze(Handle:menu, MenuAction:action, param1, param2)
 		decl String:info[32];
 		new userid, target;
 		
-		GetMenuItem(menu, param2, info, sizeof(info));
+		menu.GetItem(param2, info, sizeof(info));
 		userid = StringToInt(info);
 
 		if ((target = GetClientOfUserId(userid)) == 0)
@@ -433,11 +433,11 @@ public MenuHandler_Freeze(Handle:menu, MenuAction:action, param1, param2)
 	}
 }
 
-public MenuHandler_FreezeBomb(Handle:menu, MenuAction:action, param1, param2)
+public MenuHandler_FreezeBomb(Menu menu, MenuAction action, int param1, int param2)
 {
 	if (action == MenuAction_End)
 	{
-		CloseHandle(menu);
+		delete menu;
 	}
 	else if (action == MenuAction_Cancel)
 	{
@@ -451,7 +451,7 @@ public MenuHandler_FreezeBomb(Handle:menu, MenuAction:action, param1, param2)
 		decl String:info[32];
 		new userid, target;
 		
-		GetMenuItem(menu, param2, info, sizeof(info));
+		menu.GetItem(param2, info, sizeof(info));
 		userid = StringToInt(info);
 
 		if ((target = GetClientOfUserId(userid)) == 0)
